@@ -5,11 +5,9 @@ This is a task for building a chatbot to read a document and answer user queries
 when user asks for it. For this basic if-else statements is used.
 
 # Installation
-
-'''git clone'''
-'''pip install -r requirements.txt'''
+```1. git clone```
+```2. pip install -r requirements.txt```
 
 # Run
-
-'''streamlit run main.py'''
-'''python run.py'''
+```1. streamlit run main.py```
+```2. python run.py```
