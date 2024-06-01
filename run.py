@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.retrievers.multi_query import MultiQueryRetriever
@@ -93,9 +92,9 @@ def add_non_empty_details(current_details: PersonalDetails, new_details: Persona
 def ask_for_info(llm, ask_for=['name', 'phone', 'email']):
     gathering_template = ChatPromptTemplate.from_template(
         """
-        Your job is to ask user for their details only if user calls for it. 
-        You must ask user for their details. You should ask user one question at
-        a time even if you don't get all the info don't ask as a list! Don't greet the user! Don't say Hi.
+        Your job is to ask user for their details: Name, Phone and Email. 
+        You should ask user one question at a time even if you don't get all the info don't ask as a list! 
+        Don't greet the user! Don't say Hi.
         Explain you need to get some info. If the ask_for list is empty thank them and ask them how you can
         help them. Ask user for the Name, Phone and Email.
         ### ask_for list: {ask_for}
@@ -115,7 +114,6 @@ def filter_response(text_input, user_details, llm):
 
 
 def main():
-    load_dotenv()
     path = input("Enter path to the file: ")
     pdf_reader = PdfReader(path)
     text = ""
@@ -175,7 +173,8 @@ def main():
             user_input = refine_sentence(user_input)[0]
             if user_input in re_sent:
                 while ask_for:
-                    ask_for_info(llm, ask_for=ask_for)
+                    ai_chat = ask_for_info(llm, ask_for=ask_for)
+                    print(ai_chat)
                     user_input = input("Ans: ")
                     user_details, ask_for = filter_response(user_input, user_details, llm)
                     ai_response = ask_for_info(llm, ask_for)
